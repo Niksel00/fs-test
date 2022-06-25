@@ -5,24 +5,25 @@ import AdminContext from './AdminContext';
 import Api from '../../functions/Api';
 
 export default function AdminProvider(props) {
-    const [halls, setHalls] = useState([]);
-    const [activeHall, setActiveHall] = useState('')
+  const [halls, setHalls] = useState([]);
 
-    const loadFromServer = async () => {
-        setHalls(await  Api.getItems('hall'));
-        setActiveHall(0);
-    };
+  const [activeHall, setActiveHall] = useState('');
 
-    useEffect(() => {
-        loadFromServer();
-    }, []);
+  const loadFromServer = async () => {
+    setHalls(await Api.getItems('hall'));
+    setActiveHall(0);
+  };
 
-    return (
-        <AdminContext.Provider value={{
-            halls, setHalls, activeHall, setActiveHall, loadFromServer,
-        }}
-        >
-            {props.children}
-        </AdminContext.Provider>
-    );
+  useEffect(() => {
+    loadFromServer();
+  }, []);
+
+  return (
+    <AdminContext.Provider value={{
+      halls, setHalls, activeHall, setActiveHall, loadFromServer,
+    }}
+    >
+      {props.children}
+    </AdminContext.Provider>
+  );
 }
